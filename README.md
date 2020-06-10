@@ -1,10 +1,10 @@
 # neo4j-docker
 
-We have two versions of the neo4j: `dev` and `test`. The `dev` version is used for development realted activities with a sample neo4j database. The `test` version is used for testing purposes before production deployment. And for both versions, the neo4j configuration and graph database are mounted from the host to the container for data persistence across container restarts.
+We have three versions of the neo4j: `dev`, `test`, and `stage`. The `dev` version is used for development realted activities with a sample neo4j database. The `test` version is used for testing purposes. And the `stage` for before production deployment. And for all versions, the neo4j configuration and graph database are mounted from the host to the container for data persistence across container restarts.
 
 ## Set the neo4j password
 
-The username for connecting to neo4j (via either neo4j browser or bolt protocol) is "neo4j" (can't change this) and default password is "1234". To change the neo4j password, go to `dev/start.sh` or `test/start.sh` and edit the line:
+The username for connecting to neo4j (via either neo4j browser or bolt protocol) is "neo4j" (can't change this) and default password is "1234". To change the neo4j password, go to `dev/start.sh` or `test/start.sh` or `stage/start.sh` and edit the line:
 
 ````
 /usr/src/app/neo4j/bin/neo4j-admin set-initial-password 1234
@@ -43,7 +43,7 @@ The changes for `test` version include:
 
 ## Update base image
 
-Both the `dev` and `test` versions are based on the `hubmap/neo4j-base-image:latest` image. If you need to update the base image, recrerate it with 
+Both the `dev`, `test`, and `stage` versions are based on the `hubmap/neo4j-base-image:latest` image. If you need to update the base image, recrerate it with 
 
 ````
 sudo docker build -t hubmap/neo4j-base-image:latest

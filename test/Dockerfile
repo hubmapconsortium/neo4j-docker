@@ -1,9 +1,6 @@
 # Parent image
 FROM hubmap/neo4j-base-image:latest
 
-LABEL description="Neo4j test version for HuBMAP" \
-	version="1.0"
-
 # Change to directory that contains the Dockerfile
 WORKDIR /usr/src/app
 
