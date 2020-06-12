@@ -6,7 +6,7 @@ services:
     build: ./stage
     # Build the image with name and tag
     image: hubmap-neo4j-stage:1.0
-    hostname: hubmap-neo4j-test
+    hostname: hubmap-neo4j-stage
     container_name: hubmap-neo4j-stage
     # Avoid accidentally creating zombie processes
     init: true
