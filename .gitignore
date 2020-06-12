@@ -4,6 +4,6 @@ test/start.sh
 stage/start.sh
 
 # Ignore the hubmap.db
-dev/hubmap.db/*
-test/hubmap.db/*
-stage/hubmap.db/*
+dev/hubmap.db/
+test/hubmap.db/
+stage/hubmap.db/
