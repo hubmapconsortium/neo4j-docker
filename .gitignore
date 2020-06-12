@@ -1,3 +1,4 @@
 # Ignore the start.sh which contains deployment password
 dev/start.sh
 test/start.sh
+stage/start.sh
