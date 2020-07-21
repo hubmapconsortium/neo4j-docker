@@ -10,9 +10,22 @@ The username for connecting to neo4j (via either neo4j browser or bolt protocol)
 /usr/src/app/neo4j/bin/neo4j-admin set-initial-password 1234
 ````
 
-## Configure max memory limit
+## Set container max memory limit
 
-Based on the memory limit on the deployment server, you may need to change the default max memory allocation specified int the `docker-compose` yaml file.
+Based on the memory limit on the deployment server, you may need to change the default max memory allocation for the running container specified in the `docker-compose` yaml file. By default we use `4G` for each container. And once all the neo4j containers are running, you can verify with:
+
+````
+sudo docker stats --all
+````
+
+And the output would look like:
+
+````
+CONTAINER ID        NAME                 CPU %               MEM USAGE / LIMIT   MEM %               NET I/O             BLOCK I/O           PIDS
+17f3635c031e        hubmap-neo4j-stage   0.72%               748.3MiB / 4GiB     18.27%              14.1kB / 529kB      0B / 327kB          55
+e71fa8001aa5        hubmap-neo4j-dev     0.44%               418.2MiB / 4GiB     10.21%              656B / 0B           0B / 331kB          50
+2a5177b88ab9        hubmap-neo4j-test    0.48%               899MiB / 4GiB       21.95%              14.7kB / 288kB      0B / 333kB          54
+````
 
 ## Build docker image and spin up the neo4j container
 
