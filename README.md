@@ -1,6 +1,6 @@
 # neo4j-docker
 
-We have three versions of the neo4j: `dev`, `test`, and `stage`. The `dev` version is used for development realted activities with a sample neo4j database. The `test` version is used for testing purposes. And the `stage` for before production deployment. And for all versions, the neo4j configuration and graph database are mounted from the host to the container for data persistence across container restarts.
+We have three versions of the neo4j: DEV, TEST, and STAGE. The DEV version is used for development realted activities with a sample neo4j database. The TEST version is used for testing purposes. And the STAGE for before production deployment. And for all versions, the neo4j configuration and graph database are mounted from the host to the container for data persistence across container restarts.
 
 ## Set the neo4j password
 
@@ -10,9 +10,13 @@ The username for connecting to neo4j (via either neo4j browser or bolt protocol)
 /usr/src/app/neo4j/bin/neo4j-admin set-initial-password 1234
 ````
 
+## Configure CPU and memory resource constraints
+
+Based on the CPU and memory limits on the deployment server, you may need to change the default resource constrainets specified int the `docker-compose` yaml file.
+
 ## Build docker image and spin up the neo4j container
 
-We'll describe the steps with `dev` version:
+We'll describe the steps with DEV deployment:
 
 ````
 sudo chmod +x neo4j-docker.sh
@@ -31,7 +35,7 @@ And to stop the service:
 sudo ./neo4j-docker.sh dev stop
 ````
 
-For testing deployment, simply change to:
+For TEST and STAGE deployment, simply change to:
 
 `sudo ./neo4j-docker.sh test build` to build the docker image. Then `sudo ./neo4j-docker.sh test start` and `sudo ./neo4j-docker.sh test stop` for start and stop the neo4j `test` container.
 
