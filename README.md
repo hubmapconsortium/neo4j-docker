@@ -18,7 +18,7 @@ Based on the memory limit on the deployment server, you may need to change the d
 sudo docker stats --all
 ````
 
-And the output would look like below when we deployed all the three versions of neo4 on the same host machine:
+And the output would look like below when we deployed all the three versions of neo4j on the same host machine:
 
 ````
 CONTAINER ID        NAME                 CPU %               MEM USAGE / LIMIT   MEM %               NET I/O             BLOCK I/O           PIDS
