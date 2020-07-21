@@ -15,7 +15,7 @@ services:
       resources:
         limits:
           # Modify this based on the actual VM resource
-          memory: 3G
+          memory: 4G
     ports:
       - "7474:7474"
       - "7687:7687"

@@ -15,7 +15,7 @@ services:
       resources:
         limits:
           # Modify this based on the actual VM resource
-          memory: 3G
+          memory: 4G
     # Avoid accidentally creating zombie processes
     init: true
     # Specifying a restart policy to avoid downtime
