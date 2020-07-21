@@ -8,6 +8,14 @@ services:
     image: hubmap-neo4j-dev:1.0
     hostname: hubmap-neo4j-dev
     container_name: hubmap-neo4j-dev
+    # By default this `deploy` key only takes effect when deploying to a swarm with docker stack deploy, and is ignored by docker-compose up
+    # However, we can use the `--compatibility` flag within `docker-compose --compatibility up`
+    # The `--compatibility` flag will attempt to convert deploy keys in docker-compose v3 to their non-Swarm equivalent
+    deploy:
+      resources:
+        limits:
+          # Modify this based on the actual VM resource
+          memory: 3G
     ports:
       - "7474:7474"
       - "7687:7687"

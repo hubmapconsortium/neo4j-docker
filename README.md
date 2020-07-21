@@ -10,9 +10,9 @@ The username for connecting to neo4j (via either neo4j browser or bolt protocol)
 /usr/src/app/neo4j/bin/neo4j-admin set-initial-password 1234
 ````
 
-## Configure CPU and memory resource constraints
+## Configure max memory limit
 
-Based on the CPU and memory limits on the deployment server, you may need to change the default resource constrainets specified int the `docker-compose` yaml file.
+Based on the memory limit on the deployment server, you may need to change the default max memory allocation specified int the `docker-compose` yaml file.
 
 ## Build docker image and spin up the neo4j container
 

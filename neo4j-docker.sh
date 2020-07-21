@@ -9,7 +9,9 @@ else
         if [ "$2" = "build" ]; then
 			docker-compose -f docker-compose.$1.yml build
 	    elif [ "$2" = "start" ]; then
-			docker-compose -p hubmap-neo4j-docker-$1 -f docker-compose.$1.yml up -d
+	    	# The `--compatibility` flag will attempt to convert deploy keys (memory limit in our case)
+	    	# in docker-compose v3 to their non-Swarm equivalent
+			docker-compose -p hubmap-neo4j-docker-$1 -f docker-compose.$1.yml --compatibility up -d
 		elif [ "$2" = "stop" ]; then
 			docker-compose -p hubmap-neo4j-docker-$1 -f docker-compose.$1.yml stop
 	    fi
