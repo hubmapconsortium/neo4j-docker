@@ -7,3 +7,9 @@ stage/start.sh
 dev/hubmap.db/
 test/hubmap.db/
 stage/hubmap.db/
+
+# Keep the empty README.md to preserve the hubmap.db directory in github
+!dev/hubmap.db/README.md
+!test/hubmap.db/README.md
+!stage/hubmap.db/README.md
+
