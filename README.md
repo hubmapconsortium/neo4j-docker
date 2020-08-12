@@ -71,7 +71,7 @@ Or
 java -XshowSettings:vm
 ````
 
-## Build docker image and spin up the neo4j container
+## Build docker image
 
 We'll describe the steps with DEV deployment:
 
@@ -80,7 +80,17 @@ sudo chmod +x neo4j-docker.sh
 sudo ./neo4j-docker.sh dev build
 ````
 
-This build creates the neo4k docker image for `dev`. After that, we can start the neo4j container by:
+This build creates the neo4j docker image for `dev`. 
+
+## Data persistence via volume mount
+
+There's an empty directory under each version's sub-directory named `hubmap.db`. This `hubmap.db` is the database to be mounted from host to the neo4j container for data persistence.
+
+If you have an exported version of the database, for instance `$NEO4J_HOME/data/databases/graph.db`. Copy all the files within `graph.db` to this `hubmap.db` before starting the container.
+
+## Spin up the neo4j container
+
+We can start the neo4j container by:
 
 ````
 sudo ./neo4j-docker.sh dev start
