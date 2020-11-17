@@ -28,8 +28,8 @@ services:
     # Specifying a restart policy to avoid downtime
     restart: always
     ports:
-      - "7457:7474"
-      - "7657:7687"
+      - "7474:7474"
+      - "7687:7687"
     volumes:
       # Mount the neo4j configuration file to container
       - "./refactor/neo4j.conf:/usr/src/app/neo4j/conf/neo4j.conf"
