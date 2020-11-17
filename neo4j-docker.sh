@@ -1,7 +1,7 @@
 #!/bin/bash
 
-if [[ "$1" != "dev" && "$1" != "test" && "$1" != "stage" ]]; then
-	echo "Unknown build environment '$1', specify 'dev', 'test', or 'stage'"
+if [[ "$1" != "dev" && "$1" != "test" && "$1" != "stage" && "$1" != "refactor" ]]; then
+	echo "Unknown build environment '$1', specify 'dev', 'test', 'stage', or 'refactor'"
 else
 	if [[ "$2" != "build" && "$2" != "start" && "$2" != "stop" ]]; then
 		echo "Unknown command '$2', specify 'build' or 'start' or 'stop' as the second argument"
