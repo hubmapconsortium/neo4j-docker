@@ -117,7 +117,7 @@ The changes for `test` version include:
 Both the `dev`, `test`, and `stage` versions are based on the `hubmap/neo4j-base-image:latest` image. If you need to update the base image, recrerate it with 
 
 ````
-sudo docker build -t hubmap/neo4j-base-image:latest
+sudo docker build -t hubmap/neo4j-base-image:latest .
 ````
 
 Then publish it to the DockerHub:

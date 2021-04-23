@@ -28,10 +28,10 @@ services:
     # Specifying a restart policy to avoid downtime
     restart: always
     ports:
-      - "7456:7474"
-      - "7659:7687"
+      - "7474:7474"
+      - "7687:7687"
     volumes:
       # Mount the neo4j configuration file to container
       - "./stage/neo4j.conf:/usr/src/app/neo4j/conf/neo4j.conf"
       # Mount the neo4j sample database to container
-      - "./stage/hubmap.db:/usr/src/app/neo4j/data/databases/hubmap.db"
+      - "./stage/hubmap:/usr/src/app/neo4j/data/databases/hubmap"

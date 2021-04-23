@@ -34,4 +34,4 @@ services:
       # Mount the neo4j configuration file to container
       - "./stage/neo4j.conf:/usr/src/app/neo4j/conf/neo4j.conf"
       # Mount the neo4j sample database to container
-      - "./stage/hubmap.db:/usr/src/app/neo4j/data/databases/hubmap.db"
+      - "./stage/hubmap:/usr/src/app/neo4j/data/databases/hubmap"
