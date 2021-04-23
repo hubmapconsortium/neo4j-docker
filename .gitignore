@@ -2,14 +2,17 @@
 dev/start.sh
 test/start.sh
 stage/start.sh
+ptod/start.sh
 
 # Ignore the hubmap.db
-dev/hubmap.db/
-test/hubmap.db/
-stage/hubmap.db/
+dev/hubmap/*
+test/hubmap/*
+stage/hubmap/*
+prod/hubmap/*
 
 # Keep the empty README.md to preserve the hubmap.db directory in github
-!dev/hubmap.db/README.md
-!test/hubmap.db/README.md
-!stage/hubmap.db/README.md
+!dev/hubmap/README.md
+!test/hubmap/README.md
+!stage/hubmap/README.md
+!prod/hubmap/README.md
 
