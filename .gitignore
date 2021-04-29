@@ -1,18 +1,14 @@
-# Ignore the start.sh which contains deployment password
-dev/start.sh
-test/start.sh
-stage/start.sh
-ptod/start.sh
+# Ignore the mounted data
+localhost/data/*
+dev/data/*
+test/data/*
+stage/data/*
+prod/data/*
 
-# Ignore the hubmap.db
-dev/hubmap/*
-test/hubmap/*
-stage/hubmap/*
-prod/hubmap/*
-
-# Keep the empty README.md to preserve the hubmap.db directory in github
-!dev/hubmap/README.md
-!test/hubmap/README.md
-!stage/hubmap/README.md
-!prod/hubmap/README.md
+# Keep the empty README.md to preserve the data directory in github
+!localhost/data/README.md
+!dev/data/README.md
+!test/data/README.md
+!stage/data/README.md
+!prod/data/README.md
 

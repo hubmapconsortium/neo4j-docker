@@ -1,24 +1,44 @@
 # neo4j-docker
 
-We have three versions of the neo4j: DEV, TEST, and STAGE. 
+All the neo4j(`dev`, `test`, `stage`, and `prod`) versions use the same HuBMAP neo4j image, and the neo4j configuration as well as database files are mounted from the host to the container for data persistence across container restarts.
 
-- DEV version is used for development realted activities with a sample neo4j database. 
-- TEST version is used for testing purposes. 
-- STAGE for before production deployment. 
+## Migrate neo4j 3.5.x to 4.2.x
 
-And for all versions, the neo4j configuration and graph database are mounted from the host to the container for data persistence across container restarts.
+Step 1: Live backup the current neo4j PROD database
 
-## Set the neo4j password
-
-First you'll need to create a file named `start.sh` based on the `start.sh.example` under the directory of each deployment version. This script sets the neo4j password.
-
-The username for connecting to neo4j (via either neo4j browser or bolt protocol) is "neo4j" (can't be changed) and default password is "1234". To change the neo4j password, go to `dev/start.sh` or `test/start.sh` or `stage/start.sh` and edit the line and replace "1234" with the desired password.
+Step 2: Remove node properties `doi_suffix_id` and `has_doi`
 
 ````
-/usr/src/app/neo4j/bin/neo4j-admin set-initial-password 1234
+MATCH (n:Entity)
+REMOVE n.doi_suffix_id, n.has_doi
+RETURN count(n)
 ````
 
-Note: this line is a shell command so some special characters in the password needs to be taken care of by quoting or backslash-escaping, be careful with that.
+Step 3: Shut down the neo4j PROD database and do an offline backup
+
+Step 4: Copy 3.5.x database backup to 4.2.5 Neo4j enterprise edition
+
+The `neo4j-admin copy` command comes with the Neo4j Enterprise edition can be used to clean up database inconsistencies, compact stores, and do a migration at the same time.
+
+https://neo4j.com/docs/migration-guide/current/online-backup-copy-database/#tutorial-online-backup-copy-database
+
+````
+./neo4j-admin copy --from-path=/private/tmp/3.5.x/hubmap.db --to-database=hubmap
+````
+
+Step 5: Move the copied database to the new neo4j PROD docker
+
+Step 6: Pull the hubmap/neo4j-image and start up the PROD container
+
+````
+./neo4j-docker.sh prod start
+```` 
+
+Step 7: Add the new neo4j PROD EC2 to security group and allow the ports 7474 and 7687
+
+Step 8: Change DNS from Route 53 to point `http://neo4j.hubmapconsortium.org:7474/` to the new instance
+
+Step 9: Initial login and change password (can reuse the old password?) 
 
 ## Set container max memory limit
 
@@ -42,7 +62,7 @@ environment:
   - _JAVA_OPTIONS=-XX:+UseContainerSupport -XX:MaxRAMPercentage=75.0
 ````
 
-By default we use `4G` for each container. And once all the neo4j containers are running, you can verify with:
+By default we use `4G` for `dev`, `test`, and `stage` container. The `prod` container has more resurces allocated. And once all the neo4j containers are running, you can verify with:
 
 ````
 sudo docker stats --all
@@ -71,22 +91,12 @@ Or
 java -XshowSettings:vm
 ````
 
-## Build docker image
-
-We'll describe the steps with DEV deployment:
-
-````
-sudo chmod +x neo4j-docker.sh
-sudo ./neo4j-docker.sh dev build
-````
-
-This build creates the neo4j docker image for `dev`. 
-
 ## Data persistence via volume mount
 
-There's an empty directory under each version's sub-directory named `hubmap.db`. This `hubmap.db` is the database to be mounted from host to the neo4j container for data persistence.
+There's an empty directory under each version's sub-directory named `hubmap`, which is the database to be mounted from host to the neo4j container for data persistence.
 
-If you have an exported version of the database, for instance `$NEO4J_HOME/data/databases/graph.db`. Copy all the files within `graph.db` to this `hubmap.db` before starting the container.
+If you have an exported version of the database, for instance `$NEO4J_HOME/data/databases/graph`. Copy all the files within `graph` to this `hubmap` before starting the container.
+
 
 ## Spin up the neo4j container
 
@@ -104,7 +114,7 @@ sudo ./neo4j-docker.sh dev stop
 
 For TEST and STAGE deployment, simply change to:
 
-`sudo ./neo4j-docker.sh test build` to build the docker image. Then `sudo ./neo4j-docker.sh test start` and `sudo ./neo4j-docker.sh test stop` for start and stop the neo4j `test` container.
+`sudo ./neo4j-docker.sh test start` and `sudo ./neo4j-docker.sh test stop` for start and stop the neo4j `test` container.
 
 The changes for `test` version include:
 
@@ -112,17 +122,18 @@ The changes for `test` version include:
 * Run an `init` inside each container that forwards signals and reaps processes.
 * Specifying a restart policy like `restart: always` to avoid downtime.
 
-## Update base image
+## Update HuBMAP neo4j docker image
 
-Both the `dev`, `test`, and `stage` versions are based on the `hubmap/neo4j-base-image:latest` image. If you need to update the base image, recrerate it with 
+All the `dev`, `test`, `stage`, and `prod` versions is based on the same `hubmap/neo4j-image:latest` image. If you need to update the neo4j image, recrerate it with 
 
 ````
-sudo docker build -t hubmap/neo4j-base-image:latest .
+cd neo4j-image
+sudo docker build -t hubmap/neo4j-image:latest .
 ````
 
 Then publish it to the DockerHub:
 
 ````
 sudo docker login
-sudo docker push hubmap/neo4j-base-image:latest
+sudo docker push hubmap/neo4j-image:latest
 ````

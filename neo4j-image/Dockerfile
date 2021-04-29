@@ -32,3 +32,7 @@ RUN yum update -y && \
 # The EXPOSE instruction informs Docker that the container listens on the specified network ports at runtime. 
 # EXPOSE does not make the ports of the container accessible to the host.
 EXPOSE 7474 7687
+
+# Start the neo4j server when container spins up
+# Use `console` instead of `start` to keep the terminal window stay open
+CMD ["/usr/src/app/neo4j/bin/neo4j", "console"]
