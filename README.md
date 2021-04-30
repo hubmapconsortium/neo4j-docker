@@ -1,4 +1,4 @@
-# neo4j-docker
+# neo4j-docker 4.2.5
 
 All the neo4j(`dev`, `test`, `stage`, and `prod`) versions use the same HuBMAP neo4j image, and the neo4j configuration as well as database files are mounted from the host to the container for data persistence across container restarts.
 
@@ -128,12 +128,12 @@ All the `dev`, `test`, `stage`, and `prod` versions is based on the same `hubmap
 
 ````
 cd neo4j-image
-sudo docker build -t hubmap/neo4j-image:latest .
+sudo docker build -t hubmap/neo4j-image:4.2.5 .
 ````
 
 Then publish it to the DockerHub:
 
 ````
 sudo docker login
-sudo docker push hubmap/neo4j-image:latest
+sudo docker push hubmap/neo4j-image:4.2.5
 ````
