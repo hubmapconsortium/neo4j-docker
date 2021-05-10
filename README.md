@@ -9,6 +9,12 @@ Step 1: Live backup the current neo4j PROD database
 Step 2: Remove node properties `doi_suffix_id` and `has_doi`
 
 ````
+MATCH (n:Activity)
+REMOVE n.doi_suffix_id
+RETURN count(n)
+````
+
+````
 MATCH (n:Entity)
 REMOVE n.doi_suffix_id, n.has_doi
 RETURN count(n)
