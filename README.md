@@ -16,7 +16,13 @@ RETURN count(n)
 
 ````
 MATCH (n:Entity)
-REMOVE n.doi_suffix_id, n.has_doi
+REMOVE n.doi_suffix_id
+RETURN count(n)
+````
+
+````
+MATCH (n:Entity)
+REMOVE n.has_doi
 RETURN count(n)
 ````
 
