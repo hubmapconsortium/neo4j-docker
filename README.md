@@ -4,53 +4,37 @@ All the neo4j(`dev`, `test`, `stage`, and `prod`) versions use the same HuBMAP n
 
 ## Migrate neo4j 3.5.x to 4.2.x
 
-Step 1: Live backup the current neo4j PROD database
+Step 1: Live backup the current neo4j database
 
-Step 2: Remove node properties `doi_suffix_id` and `has_doi`
+Step 2: Shut down the neo4j server and do an offline backup
 
-````
-MATCH (n:Activity)
-REMOVE n.doi_suffix_id
-RETURN count(n)
-````
+For DEV/TEST/STAGE neo4j container, shell into the container then kill the `start.sh` process to have a clean shut down.
 
-````
-MATCH (n:Entity)
-REMOVE n.doi_suffix_id
-RETURN count(n)
-````
-
-````
-MATCH (n:Entity)
-REMOVE n.has_doi
-RETURN count(n)
-````
-
-Step 3: Shut down the neo4j PROD database and do an offline backup
-
-Step 4: Copy 3.5.x database backup to 4.2.5 Neo4j enterprise edition
+Step 3: Copy 3.5.x database backup to 4.2.5 Neo4j enterprise edition
 
 The `neo4j-admin copy` command comes with the Neo4j Enterprise edition can be used to clean up database inconsistencies, compact stores, and do a migration at the same time.
 
 https://neo4j.com/docs/migration-guide/current/online-backup-copy-database/#tutorial-online-backup-copy-database
 
-````
-./neo4j-admin copy --from-path=/private/tmp/3.5.x/hubmap.db --to-database=hubmap
-````
-
-Step 5: Move the copied database to the new neo4j PROD docker
-
-Step 6: Pull the hubmap/neo4j-image and start up the PROD container
+We'll also skip node properties `doi_suffix_id` (Activity, Donor, Sample, Dataset, Collection) and `has_doi` (Collection) during the copy:
 
 ````
-./neo4j-docker.sh prod start
+./neo4j-admin copy --from-path=/private/tmp/3.5.x/hubmap.db --to-database=hubmap --skip-properties=doi_suffix_id,has_doi
+````
+
+Step 4: Move the copied database to the new neo4j docker
+
+Step 5: Pull the hubmap/neo4j-image and start up the container
+
+````
+./neo4j-docker.sh dev|test|stage|prod start
 ```` 
 
-Step 7: Add the new neo4j PROD EC2 to security group and allow the ports 7474 and 7687
+Step 6: Add the new neo4j PROD EC2 to security group and allow the ports 7474 and 7687
 
-Step 8: Change DNS from Route 53 to point `http://neo4j.hubmapconsortium.org:7474/` to the new instance
+Step 7: Change DNS from Route 53 to point `http://neo4j.hubmapconsortium.org:7474/` to the new PROD instance
 
-Step 9: Initial login and change password (can reuse the old password?) 
+Step 8: Initial login and change password (reuse the old password) 
 
 ## Set container max memory limit
 
