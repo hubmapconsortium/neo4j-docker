@@ -1,16 +1,24 @@
 # neo4j-docker 4.2.5
 
-All the neo4j(`dev`, `test`, `stage`, and `prod`) versions use the same HuBMAP neo4j image, and the neo4j configuration as well as database files are mounted from the host to the container for data persistence across container restarts.
+All the neo4j(`dev`, `test`, `stage`, and `prod`) deployments use the same HuBMAP neo4j image. The neo4j configuration as well as database files are mounted from the host to the container for data persistence across container restarts.
 
-## Migrate neo4j 3.5.x to 4.2.x
+## Migrate neo4j 3.5.x to 4.2.x on PROD
 
-Step 1: Live backup the current neo4j database
+Step 1: Check and write down the total numbers of nodes, relationship, and node properties in the current neo4j PROD. Also get the total number of nodes with `has_doi` and `doi_suffix_id` respectively.
 
-Step 2: Shut down the neo4j server and do an offline backup
+````
+MATCH (n) WHERE n.has_doi IS NOT NULL RETURN COUNT(n)
+````
 
-For DEV/TEST/STAGE neo4j container, shell into the container then kill the `start.sh` process to have a clean shut down.
+````
+MATCH (n) WHERE n.doi_suffix_id IS NOT NULL RETURN COUNT(n)
+````
 
-Step 3: Copy 3.5.x database backup to 4.2.5 Neo4j enterprise edition
+The sum of these two numbers will be verified against the result after migration since we'll be skipping them during copy.
+
+Step 2: Shut down and do an offline backup of the current neo4j PROD database
+
+Step 3: Download the PROD 3.5.x database dump and migrate to 4.2.5 Neo4j enterprise edition locally
 
 The `neo4j-admin copy` command comes with the Neo4j Enterprise edition can be used to clean up database inconsistencies, compact stores, and do a migration at the same time.
 
@@ -22,9 +30,21 @@ We'll also skip node properties `doi_suffix_id` (Activity, Donor, Sample, Datase
 ./neo4j-admin copy --from-path=/private/tmp/3.5.x/hubmap.db --to-database=hubmap --skip-properties=doi_suffix_id,has_doi
 ````
 
-Step 4: Move the copied database to the new neo4j docker
+Verify the output to make sure they match the total number of nodes, relationships, and node properties witht he existing PROD neo4j.
 
-Step 5: Pull the hubmap/neo4j-image and start up the container
+Step 4: Move the converted database to the new neo4j PROD docker
+
+Tar the entire `<neo4j>/data` directory containing the migrated database
+
+````
+tar -zcvf data.tar.gz data/
+````
+
+And then scp to the PROD VM.
+
+Step 5: Pull the hubmap/neo4j-image and start up the container with data mount
+
+Extract the tar file and copy all the sub-directories to the docker directory `/home/centos/hubmap/neo4j-docker/prod/data`, remember to retain the `README.md`.
 
 ````
 ./neo4j-docker.sh dev|test|stage|prod start
@@ -34,7 +54,7 @@ Step 6: Add the new neo4j PROD EC2 to security group and allow the ports 7474 an
 
 Step 7: Change DNS from Route 53 to point `http://neo4j.hubmapconsortium.org:7474/` to the new PROD instance
 
-Step 8: Initial login and change password (reuse the old password) 
+Step 8: Initial login with default username/password (neo4j/neo4j) and change password (reuse the old password) 
 
 ## Set container max memory limit
 
