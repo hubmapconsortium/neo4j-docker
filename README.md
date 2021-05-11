@@ -56,31 +56,7 @@ Step 7: Change DNS from Route 53 to point `http://neo4j.hubmapconsortium.org:747
 
 Step 8: Initial login with default username/password (neo4j/neo4j) and change password (reuse the old password) 
 
-## Neo4j user and role management
-
-Display current user:
-
-````
-SHOW CURRENT USER
-````
-
-Create a new user with password:
-
-````
-CREATE USER hubmap_neo4j_user
-SET PASSWORD "hubmap123"
-````
-
-````
-SHOW USERS
-````
-
-By default, the password will need to be changed, we can alter the user to avoid this:
-
-````
-ALTER USER hubmap_neo4j_user
-SET PASSWORD CHANGE NOT REQUIRED
-````
+Note: the Neo4j community edition supports to create multiple user accounts but doesn't support the role-based access control.
 
 ## Set container max memory limit
 
