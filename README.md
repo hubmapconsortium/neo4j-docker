@@ -24,10 +24,10 @@ The `neo4j-admin copy` command comes with the Neo4j Enterprise edition can be us
 
 https://neo4j.com/docs/migration-guide/current/online-backup-copy-database/#tutorial-online-backup-copy-database
 
-We'll also skip node properties `doi_suffix_id` (Activity, Donor, Sample, Dataset, Collection) and `has_doi` (Collection) during the copy:
+We'll also skip node properties `doi_suffix_id` (Activity, Donor, Sample, Dataset, Collection), `has_doi` (Collection) and `hubmap_base_id` (Sample) during the copy:
 
 ````
-./neo4j-admin copy --from-path=/private/tmp/3.5.x/hubmap.db --to-database=hubmap --skip-properties=doi_suffix_id,has_doi
+./neo4j-admin copy --from-path=/private/tmp/3.5.x/hubmap.db --to-database=hubmap --skip-properties=doi_suffix_id,has_doi,hubmap_base_id
 ````
 
 Verify the output to make sure they match the total number of nodes, relationships, and node properties witht he existing PROD neo4j.
