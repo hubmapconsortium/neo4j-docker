@@ -3,9 +3,7 @@ version: "3.7"
 services:
 
   hubmap-neo4j-dev:
-    build: ./dev
-    # Build the image with name and tag
-    image: hubmap-neo4j-dev:1.0
+    image: hubmap/neo4j-image:4.2.5
     hostname: hubmap-neo4j-dev
     container_name: hubmap-neo4j-dev
     # By default this `deploy` key only takes effect when deploying to a swarm with docker stack deploy, and is ignored by docker-compose up
@@ -29,5 +27,5 @@ services:
     volumes:
       # Mount the neo4j configuration file to container
       - "./dev/neo4j.conf:/usr/src/app/neo4j/conf/neo4j.conf"
-      # Mount the neo4j sample database to container
-      - "./dev/hubmap.db:/usr/src/app/neo4j/data/databases/hubmap.db"
+      # Mount the data to container
+      - "./dev/data:/usr/src/app/neo4j/data"
