@@ -74,6 +74,14 @@ And to stop the service:
 sudo ./neo4j-docker.sh dev stop
 ````
 
+## Copy a database (shown for DEV)
+
+- Stop the running container and remove it
+- Replace the whole `dev/data` directory with the new `data` directory containing the new database from either PROD copy or a backup
+- Start the container 
+- Login with the username and password from the new database copy
+- Change the password in Neo4j browser by typing: `:server change-password` then enter the existing password and new one
+
 ## Update HuBMAP neo4j docker image
 
 All the `localhost`, `dev`, `test`, `stage`, and `prod` versions is based on the same `hubmap/neo4j-image:latest` image. If you need to update the neo4j image, recrerate it with 
