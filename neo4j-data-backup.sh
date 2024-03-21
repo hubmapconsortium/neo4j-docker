@@ -16,8 +16,8 @@ function get_dir_of_this_script() {
     echo $DIR
 }
 
-if [[ "$1" != "localhost" && "$1" != "dev" && "$1" != "test" && "$1" != "stage" && "$1" != "prod" ]]; then
-    echo "Unknown environment '$1', specify 'localhost', 'dev', 'test', 'stage', or 'prod'"
+if [[ "$1" != "localhost" && "$1" != "dev" && "$1" != "test" && && "$1" != "prod" ]]; then
+    echo "Unknown environment '$1', specify 'localhost', 'dev', 'test', or 'prod'"
 else
     if [ $# -eq 1 ]; then
         echo "No backup directory specified as the second argument"
