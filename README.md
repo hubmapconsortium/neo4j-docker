@@ -54,9 +54,9 @@ java -XshowSettings:vm
 
 ## Data persistence via volume mount
 
-There's an empty directory under each version's sub-directory named `hubmap`, which is the database to be mounted from host to the neo4j container for data persistence.
+There's an empty directory under each version's sub-directory named `data`, which is the database to be mounted from host to the neo4j container for data persistence.
 
-If you have an exported version of the database, for instance `$NEO4J_HOME/data`. Copy all the files within `data` to this `hubmap` before starting the container.
+If you have an exported version of the database, for instance `$NEO4J_HOME/data`. Copy all the files within `data` to this `data` before starting the container.
 
 
 ## Spin up the neo4j container (shown for DEV)
