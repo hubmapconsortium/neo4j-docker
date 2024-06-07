@@ -27,7 +27,7 @@ environment:
 By default we use `4G` for `dev`, and `test` container. The `prod` container has more resurces allocated. And once all the neo4j containers are running, you can verify with:
 
 ````
-sudo docker stats --all
+docker stats --all
 ````
 
 And the output would look like below when we deployed all the three versions of neo4j on the same host machine:
@@ -64,13 +64,13 @@ If you have an exported version of the database, for instance `$NEO4J_HOME/data`
 We can start the neo4j container by:
 
 ````
-sudo ./neo4j-docker.sh dev start
+./neo4j-docker.sh dev start
 ````
 
 And to stop the service:
 
 ````
-sudo ./neo4j-docker.sh dev stop
+./neo4j-docker.sh dev stop
 ````
 
 ## Copy a database (shown for DEV)
@@ -83,7 +83,7 @@ sudo ./neo4j-docker.sh dev stop
 
 ## Update HuBMAP neo4j docker image
 
-All the `localhost`, `dev`, `test`, and `prod` versions is based on the same `hubmap/neo4j-image:latest` image. If you need to update the neo4j image, recrerate it with 
+All the `localhost`, `dev`, `test`, and `prod` versions is based on the same `hubmap/neo4j-image` image. To update the neo4j image, recrerate it with 
 
 ````
 cd neo4j-image
