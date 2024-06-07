@@ -1,9 +1,7 @@
-#version: "3.7"
-
 services:
 
   hubmap-neo4j-prod:
-    image: hubmap/neo4j-image:4.2.5
+    image: hubmap/neo4j-image:5.20.0
     hostname: hubmap-neo4j-prod
     container_name: hubmap-neo4j-prod
     # By default this `deploy` key only takes effect when deploying to a swarm with docker stack deploy, and is ignored by docker-compose up

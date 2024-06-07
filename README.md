@@ -1,6 +1,6 @@
-# neo4j-docker 4.2.5
+# neo4j-docker 5.20.0
 
-All the neo4j(`dev`, `test`, `stage`, and `prod`) deployments use the same HuBMAP neo4j image. The neo4j configuration as well as database files are mounted from the host to the container for data persistence across container restarts.
+All the neo4j(`dev`, `test`, and `prod`) deployments use the same HuBMAP neo4j image. The neo4j configuration as well as database files are mounted from the host to the container for data persistence across container restarts.
 
 ## Set container max memory limit
 
@@ -24,7 +24,7 @@ environment:
   - _JAVA_OPTIONS=-XX:+UseContainerSupport -XX:MaxRAMPercentage=75.0
 ````
 
-By default we use `4G` for `dev`, `test`, and `stage` container. The `prod` container has more resurces allocated. And once all the neo4j containers are running, you can verify with:
+By default we use `4G` for `dev`, and `test` container. The `prod` container has more resurces allocated. And once all the neo4j containers are running, you can verify with:
 
 ````
 sudo docker stats --all
@@ -34,7 +34,6 @@ And the output would look like below when we deployed all the three versions of 
 
 ````
 CONTAINER ID        NAME                 CPU %               MEM USAGE / LIMIT   MEM %               NET I/O             BLOCK I/O           PIDS
-17f3635c031e        hubmap-neo4j-stage   0.72%               748.3MiB / 4GiB     18.27%              14.1kB / 529kB      0B / 327kB          55
 e71fa8001aa5        hubmap-neo4j-dev     0.44%               418.2MiB / 4GiB     10.21%              656B / 0B           0B / 331kB          50
 2a5177b88ab9        hubmap-neo4j-test    0.48%               899MiB / 4GiB       21.95%              14.7kB / 288kB      0B / 333kB          54
 ````
@@ -57,7 +56,7 @@ java -XshowSettings:vm
 
 There's an empty directory under each version's sub-directory named `hubmap`, which is the database to be mounted from host to the neo4j container for data persistence.
 
-If you have an exported version of the database, for instance `$NEO4J_HOME/data/databases/graph`. Copy all the files within `graph` to this `hubmap` before starting the container.
+If you have an exported version of the database, for instance `$NEO4J_HOME/data`. Copy all the files within `data` to this `hubmap` before starting the container.
 
 
 ## Spin up the neo4j container (shown for DEV)
@@ -84,16 +83,16 @@ sudo ./neo4j-docker.sh dev stop
 
 ## Update HuBMAP neo4j docker image
 
-All the `localhost`, `dev`, `test`, `stage`, and `prod` versions is based on the same `hubmap/neo4j-image:latest` image. If you need to update the neo4j image, recrerate it with 
+All the `localhost`, `dev`, `test`, and `prod` versions is based on the same `hubmap/neo4j-image:latest` image. If you need to update the neo4j image, recrerate it with 
 
 ````
 cd neo4j-image
-sudo docker build -t hubmap/neo4j-image:4.2.5 .
+docker build -t hubmap/neo4j-image:5.20.0 .
 ````
 
 Then publish it to the DockerHub:
 
 ````
-sudo docker login
-sudo docker push hubmap/neo4j-image:4.2.5
+docker login
+docker push hubmap/neo4j-image:5.20.0
 ````

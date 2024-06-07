@@ -5,6 +5,8 @@ test/data/*
 stage/data/*
 prod/data/*
 
+**/.DS_Store
+
 # Keep the empty README.md to preserve the data directory in github
 !localhost/data/README.md
 !dev/data/README.md
