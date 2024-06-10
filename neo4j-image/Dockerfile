@@ -15,8 +15,9 @@ COPY . .
 # Download neo4j community server
 # Extract neo4j tarball
 # Rename folder to neo4j
+# Move the APOC core jar to plugins directory
 # Download the APOC extended jar
-# Move the apoc jar to neo4j plugins directory
+# Move the APOC extended jar to neo4j plugins directory
 # Remove the downloaded neo4j tarball
 # Clean all yum cache
 RUN yum update -y && \
@@ -24,6 +25,7 @@ RUN yum update -y && \
     wget http://dist.neo4j.org/neo4j-community-5.20.0-unix.tar.gz && \
     tar -zxvf neo4j-community-5.20.0-unix.tar.gz && \
     mv neo4j-community-5.20.0 neo4j && \
+    mv neo4j/labs/apoc-5.20.0-core.jar neo4j/plugins && \
     wget https://github.com/neo4j-contrib/neo4j-apoc-procedures/releases/download/5.20.0/apoc-5.20.0-extended.jar && \
     mv apoc-5.20.0-extended.jar neo4j/plugins && \
     rm neo4j-community-5.20.0-unix.tar.gz && \
