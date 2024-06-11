@@ -3,7 +3,7 @@
 services:
 
   hubmap-neo4j-test:
-    image: hubmap/neo4j-image:4.2.5
+    image: hubmap/neo4j-image:5.20.0
     hostname: hubmap-neo4j-test
     container_name: hubmap-neo4j-test
     deploy:
