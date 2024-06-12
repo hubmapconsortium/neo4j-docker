@@ -3,17 +3,16 @@
 services:
 
   hubmap-neo4j-test:
-    image: hubmap/neo4j-image:4.2.5
+    image: hubmap/neo4j-image:5.20.0
     hostname: hubmap-neo4j-test
     container_name: hubmap-neo4j-test
-    # By default this `deploy` key only takes effect when deploying to a swarm with docker stack deploy, and is ignored by docker-compose up
-    # However, we can use the `--compatibility` flag within `docker-compose --compatibility up`
-    # The `--compatibility` flag will attempt to convert deploy keys in docker-compose v3 to their non-Swarm equivalent
     deploy:
+      # Modify this based on the actual VM resource
       resources:
         limits:
-          # Modify this based on the actual VM resource
-          memory: 4G
+          memory: 8G
+        reservations:
+          memory: 6G
     # Allow the JVM to read cgroup limits
     # -XX:+UseContainerSupport is enabled by default on linux machines, 
     # this feature was introduced in java10 then backported to Java-8u191, the base image comes with OpenJDK(build 1.8.0_232-b09)
