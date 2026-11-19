@@ -33,7 +33,7 @@ And to stop the service:
 
 ## Update HuBMAP neo4j docker image
 
-All the `localhost`, `dev`, `test`, and `prod` versions is based on the same `hubmap/neo4j-image` image. To update the neo4j image, recrerate it with 
+All the `localhost`, `dev`, and `prod` versions is based on the same `hubmap/neo4j-image` image. To update the neo4j image, recrerate it with 
 
 ````
 cd neo4j-image
